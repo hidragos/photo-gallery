@@ -62,8 +62,16 @@ import { PhotoService } from './photo.service';
       }
 
       .album-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-16px);
         box-shadow: 0 8px 20px var(--card-shadow-hover, rgba(0, 0, 0, 0.15));
+      }
+
+      .album-card:hover .album-cover img {
+        transform: scale(1.05);
+      }
+
+      .album-card:hover .album-info h3 {
+        text-decoration: underline;
       }
 
       .album-cover {
@@ -76,10 +84,6 @@ import { PhotoService } from './photo.service';
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s ease;
-      }
-
-      .album-card:hover .album-cover img {
-        transform: scale(1.05);
       }
 
       .album-info {

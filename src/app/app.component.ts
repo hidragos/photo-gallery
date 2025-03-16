@@ -116,14 +116,13 @@ import { ThemeService } from './theme.service';
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--bg-secondary);
         color: var(--text-primary); /* Icons will inherit this color */
         transition: transform 300ms ease, background-color 300ms ease;
       }
 
       .theme-toggle:hover {
         transform: rotate(15deg);
-        background-color: var(--accent-light, rgba(66, 133, 244, 0.1));
+        color: var(--accent);
       }
 
       .theme-toggle svg {
@@ -146,13 +145,13 @@ import { ThemeService } from './theme.service';
       }
 
       nav a:hover {
-        background-color: var(--bg-secondary);
+        color: var(--accent);
       }
 
       nav a.active {
         color: var(--accent);
         font-weight: 500;
-        background-color: var(--bg-secondary);
+        background-color: var(--accent-light);
       }
 
       footer {

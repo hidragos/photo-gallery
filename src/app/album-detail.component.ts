@@ -19,7 +19,21 @@ import { PhotoService } from './photo.service';
     <div class="album-detail-container" *ngIf="album">
       <div class="album-header">
         <button class="back-button" routerLink="/albums">
-          ← Back to Albums
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 18l-6-6 6-6" />
+            <line x1="19" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Albums</span>
         </button>
         <h2>{{ album.title }}</h2>
         <p class="album-description">{{ album.description }}</p>
@@ -67,7 +81,7 @@ import { PhotoService } from './photo.service';
       }
 
       .back-button:hover {
-        color: var(--text-primary); /* Update to use theme variable */
+        color: var(--accent); /* Update to use theme variable */
       }
 
       h2 {
