@@ -101,12 +101,10 @@ export class PhotoGalleryComponent implements OnInit {
 
   openPhotoDialog(photo: any) {
     this.selectedPhoto = photo;
-    document.body.style.overflow = 'hidden';
   }
 
   closePhotoDialog() {
     this.selectedPhoto = null;
-    document.body.style.overflow = 'auto';
   }
 
   navigatePhoto(direction: 'prev' | 'next') {

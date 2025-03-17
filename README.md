@@ -1,0 +1,2 @@
+- Cover image only upload photo (split uplpado image component)
+- iamge uploader componetn: resize images when displaying them so optimal also deleting and readiing gives issue also dont allow duplicate upload
