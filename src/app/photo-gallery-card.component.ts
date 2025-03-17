@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="photo-card" [ngClass]="{ tall: isTall(), wide: isWide() }">
+    <div class="photo-card">
       <img [src]="photo.url" [alt]="photo.title" loading="lazy" />
       <div class="overlay">
         <h3>{{ photo.title }}</h3>

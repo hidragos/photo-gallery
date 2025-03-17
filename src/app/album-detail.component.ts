@@ -18,56 +18,43 @@ import { PhotoService } from './photo.service';
     BaseLayoutComponent,
   ],
   template: `
-    <app-base-layout *ngIf="album">
-      <div class="album-header">
-        <button class="back-button" routerLink="/albums">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M15 18l-6-6 6-6" />
-            <line x1="19" y1="12" x2="9" y2="12" />
-          </svg>
-          <span>Albums</span>
-        </button>
-        <h2>{{ album.title }}</h2>
+    <app-base-layout
+      [title]="album?.title"
+      [showBackButton]="true"
+      backLabel="Albums"
+      backLink="/albums"
+    >
+      <ng-container *ngIf="album">
         <p class="album-description">{{ album.description }}</p>
-      </div>
 
-      <div class="gallery">
-        <div class="photo-card add-photos-card" (click)="addPhotos()">
-          <div class="add-photos-content">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            <span>Add Photos</span>
+        <div class="gallery">
+          <div class="photo-card add-photos-card" (click)="addPhotos()">
+            <div class="add-photos-content">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Add Photos</span>
+            </div>
           </div>
-        </div>
 
-        <app-photo-gallery-card
-          *ngFor="let photo of albumPhotos"
-          [photo]="photo"
-          (click)="openPhotoDialog(photo)"
-        ></app-photo-gallery-card>
-      </div>
+          <app-photo-gallery-card
+            *ngFor="let photo of albumPhotos"
+            [photo]="photo"
+            (click)="openPhotoDialog(photo)"
+          ></app-photo-gallery-card>
+        </div>
+      </ng-container>
 
       <app-photo-full-dialog
         *ngIf="selectedPhoto"
@@ -76,8 +63,6 @@ import { PhotoService } from './photo.service';
         (close)="closePhotoDialog()"
         (navigate)="navigatePhoto($event)"
       ></app-photo-full-dialog>
-
-      <div *ngIf="loading" class="loader">Loading album photos...</div>
     </app-base-layout>
   `,
   styles: [
@@ -170,10 +155,9 @@ export class AlbumDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private photoService: PhotoService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.loading = true;
     this.route.params.subscribe((params) => {
       const albumId = params['id'];
       this.photoService.getAlbumById(albumId).subscribe((album) => {
@@ -181,7 +165,6 @@ export class AlbumDetailComponent implements OnInit {
 
         this.photoService.getPhotosByAlbumId(albumId).subscribe((photos) => {
           this.albumPhotos = photos;
-          this.loading = false;
         });
       });
     });

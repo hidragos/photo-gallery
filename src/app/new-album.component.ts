@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BaseLayoutComponent } from './layout/base-layout.component';
@@ -17,7 +22,11 @@ import { UploadPhotoComponent } from './upload-photo.component';
     UploadPhotoComponent,
   ],
   template: `
-    <app-base-layout title="Create New Album">
+    <app-base-layout
+      [showBackButton]="true"
+      backLabel="Albums"
+      backLink="/albums"
+    >
       <div class="form-container">
         <form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -97,6 +106,7 @@ import { UploadPhotoComponent } from './upload-photo.component';
         background: var(--bg-primary);
         color: var(--text-primary);
         font-size: 16px;
+        inline-size: -webkit-fill-available;
       }
 
       input:focus,
@@ -134,7 +144,8 @@ import { UploadPhotoComponent } from './upload-photo.component';
       }
 
       .btn-primary:hover {
-        background-color: var(--accent-dark, #0056b3);
+        background-color: var(--accent-light);
+        color: var(--accent);
       }
 
       .btn-secondary {
@@ -210,7 +221,6 @@ export class NewAlbumComponent {
       coverImage: this.coverImageFile,
     });
 
-    // Navigate back to albums page
     this.router.navigate(['/albums']);
   }
 

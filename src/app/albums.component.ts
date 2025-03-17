@@ -48,8 +48,6 @@ import { PhotoService } from './photo.service';
           </div>
         </div>
       </div>
-
-      <div *ngIf="loading" class="loader">Loading albums...</div>
     </app-base-layout>
   `,
   styles: [
@@ -171,15 +169,12 @@ import { PhotoService } from './photo.service';
 })
 export class AlbumsComponent implements OnInit {
   albums: any[] = [];
-  loading = false;
 
-  constructor(private photoService: PhotoService, private router: Router) { }
+  constructor(private photoService: PhotoService, private router: Router) {}
 
   ngOnInit() {
-    this.loading = true;
     this.photoService.getAlbums().subscribe((albums) => {
       this.albums = albums;
-      this.loading = false;
     });
   }
 

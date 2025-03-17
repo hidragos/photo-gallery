@@ -9,7 +9,12 @@ import { PhotoService } from './photo.service';
 @Component({
   selector: 'app-photo-gallery',
   standalone: true,
-  imports: [CommonModule, PhotoGalleryCardComponent, PhotoFullDialogComponent, BaseLayoutComponent],
+  imports: [
+    CommonModule,
+    PhotoGalleryCardComponent,
+    PhotoFullDialogComponent,
+    BaseLayoutComponent,
+  ],
   template: `
     <app-base-layout title="Gallery">
       <div class="gallery">
@@ -27,8 +32,6 @@ import { PhotoService } from './photo.service';
         (close)="closePhotoDialog()"
         (navigate)="navigatePhoto($event)"
       ></app-photo-full-dialog>
-
-      <div *ngIf="loading" class="loader">Loading...</div>
     </app-base-layout>
   `,
   styles: [
@@ -53,10 +56,9 @@ export class PhotoGalleryComponent implements OnInit {
   photos: any[] = [];
   displayedPhotos: any[] = [];
   selectedPhoto: any | null = null;
-  loading = false;
   page = 1;
 
-  constructor(private photoService: PhotoService) { }
+  constructor(private photoService: PhotoService) {}
 
   ngOnInit() {
     this.loadInitialPhotos();
@@ -64,7 +66,7 @@ export class PhotoGalleryComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    if (this.loading || this.selectedPhoto) return;
+    if (this.selectedPhoto) return;
 
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
@@ -79,31 +81,22 @@ export class PhotoGalleryComponent implements OnInit {
   }
 
   loadInitialPhotos() {
-    this.loading = true;
     this.photoService.getAllPhotos().subscribe((photos) => {
       this.photos = photos;
       this.displayedPhotos = this.photos.slice(0, 10);
-      this.loading = false;
     });
   }
 
   loadMorePhotos() {
-    if (this.loading) return;
+    const nextBatch = this.photos.slice(
+      this.displayedPhotos.length,
+      this.displayedPhotos.length + 10
+    );
 
-    this.loading = true;
-    setTimeout(() => {
-      const nextBatch = this.photos.slice(
-        this.displayedPhotos.length,
-        this.displayedPhotos.length + 10
-      );
-
-      if (nextBatch.length > 0) {
-        this.displayedPhotos = [...this.displayedPhotos, ...nextBatch];
-        this.page++;
-      }
-
-      this.loading = false;
-    }, 600);
+    if (nextBatch.length > 0) {
+      this.displayedPhotos = [...this.displayedPhotos, ...nextBatch];
+      this.page++;
+    }
   }
 
   openPhotoDialog(photo: any) {
