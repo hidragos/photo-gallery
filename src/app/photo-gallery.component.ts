@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 
+import { BaseLayoutComponent } from './layout/base-layout.component';
 import { PhotoFullDialogComponent } from './photo-full-dialog.component';
 import { PhotoGalleryCardComponent } from './photo-gallery-card.component';
 import { PhotoService } from './photo.service';
@@ -8,11 +9,9 @@ import { PhotoService } from './photo.service';
 @Component({
   selector: 'app-photo-gallery',
   standalone: true,
-  imports: [CommonModule, PhotoGalleryCardComponent, PhotoFullDialogComponent],
+  imports: [CommonModule, PhotoGalleryCardComponent, PhotoFullDialogComponent, BaseLayoutComponent],
   template: `
-    <div class="gallery-container">
-      <h2>Gallery</h2>
-
+    <app-base-layout title="Gallery">
       <div class="gallery">
         <app-photo-gallery-card
           *ngFor="let photo of displayedPhotos"
@@ -30,20 +29,10 @@ import { PhotoService } from './photo.service';
       ></app-photo-full-dialog>
 
       <div *ngIf="loading" class="loader">Loading...</div>
-    </div>
+    </app-base-layout>
   `,
   styles: [
     `
-      .gallery-container {
-        padding: 20px 0;
-      }
-
-      .gallery-container h2 {
-        margin-bottom: 30px;
-        font-weight: 300;
-        color: var(--text-primary); /* Update this to use the theme variable */
-      }
-
       .gallery {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -67,7 +56,7 @@ export class PhotoGalleryComponent implements OnInit {
   loading = false;
   page = 1;
 
-  constructor(private photoService: PhotoService) {}
+  constructor(private photoService: PhotoService) { }
 
   ngOnInit() {
     this.loadInitialPhotos();

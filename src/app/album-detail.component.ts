@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
+import { BaseLayoutComponent } from './layout/base-layout.component';
 import { PhotoFullDialogComponent } from './photo-full-dialog.component';
 import { PhotoGalleryCardComponent } from './photo-gallery-card.component';
 import { PhotoService } from './photo.service';
@@ -14,9 +15,10 @@ import { PhotoService } from './photo.service';
     RouterModule,
     PhotoGalleryCardComponent,
     PhotoFullDialogComponent,
+    BaseLayoutComponent,
   ],
   template: `
-    <div class="album-detail-container" *ngIf="album">
+    <app-base-layout *ngIf="album">
       <div class="album-header">
         <button class="back-button" routerLink="/albums">
           <svg
@@ -40,6 +42,26 @@ import { PhotoService } from './photo.service';
       </div>
 
       <div class="gallery">
+        <div class="photo-card add-photos-card" (click)="addPhotos()">
+          <div class="add-photos-content">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Photos</span>
+          </div>
+        </div>
+
         <app-photo-gallery-card
           *ngFor="let photo of albumPhotos"
           [photo]="photo"
@@ -56,14 +78,10 @@ import { PhotoService } from './photo.service';
       ></app-photo-full-dialog>
 
       <div *ngIf="loading" class="loader">Loading album photos...</div>
-    </div>
+    </app-base-layout>
   `,
   styles: [
     `
-      .album-detail-container {
-        padding: 20px 0;
-      }
-
       .album-header {
         margin-bottom: 30px;
       }
@@ -72,7 +90,7 @@ import { PhotoService } from './photo.service';
         background: none;
         border: none;
         font-size: 14px;
-        color: var(--text-secondary); /* Update to use theme variable */
+        color: var(--text-secondary);
         padding: 5px 0;
         cursor: pointer;
         display: inline-flex;
@@ -81,17 +99,17 @@ import { PhotoService } from './photo.service';
       }
 
       .back-button:hover {
-        color: var(--accent); /* Update to use theme variable */
+        color: var(--accent);
       }
 
       h2 {
         margin: 0 0 15px 0;
         font-weight: 300;
-        color: var(--text-primary); /* Update to use theme variable */
+        color: var(--text-primary);
       }
 
       .album-description {
-        color: var(--text-secondary); /* Update to use theme variable */
+        color: var(--text-secondary);
         font-size: 16px;
         line-height: 1.5;
         max-width: 800px;
@@ -110,6 +128,35 @@ import { PhotoService } from './photo.service';
         font-style: italic;
         color: #777;
       }
+
+      .add-photos-card {
+        border: 2px dashed var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        background: var(--bg-secondary);
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .add-photos-card:hover {
+        border-color: var(--accent);
+        background: var(--bg-primary);
+      }
+
+      .add-photos-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        color: var(--text-secondary);
+      }
+
+      .add-photos-card:hover .add-photos-content {
+        color: var(--accent);
+      }
     `,
   ],
 })
@@ -121,8 +168,9 @@ export class AlbumDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private photoService: PhotoService
-  ) {}
+    private photoService: PhotoService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loading = true;
@@ -166,5 +214,9 @@ export class AlbumDetailComponent implements OnInit {
     }
 
     this.selectedPhoto = this.albumPhotos[newIndex];
+  }
+
+  addPhotos() {
+    this.router.navigate(['/albums', this.album.id, 'add-photos']);
   }
 }
