@@ -153,7 +153,7 @@ import { PhotoService } from '../services/photo.service';
         flex-direction: column;
         align-items: center;
         gap: 15px;
-        color: var(--text-secondary);
+        color: var(--text-icon);
       }
 
       .new-album-card:hover .new-album-content {

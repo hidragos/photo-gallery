@@ -176,7 +176,7 @@ import { ScrollViewComponent } from './scroll-view.component';
         flex-direction: column;
         align-items: center;
         gap: 15px;
-        color: var(--text-secondary);
+        color: var(--text-icon);
       }
 
       .add-photos-card:hover .add-photos-content {

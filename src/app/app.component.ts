@@ -133,7 +133,6 @@ import { ThemeService } from './services/theme.service';
       }
 
       .app-container {
-        font-family: 'Roboto', sans-serif;
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
@@ -143,7 +142,6 @@ import { ThemeService } from './services/theme.service';
 
       header {
         padding-bottom: 10px;
-        border-bottom: 1px solid var(--border-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -170,8 +168,8 @@ import { ThemeService } from './services/theme.service';
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-primary); /* Icons will inherit this color */
         transition: transform 300ms ease, background-color 300ms ease;
+        color: var(--text-icon);
       }
 
       .theme-toggle:hover {
@@ -185,7 +183,11 @@ import { ThemeService } from './services/theme.service';
 
       h1 {
         font-weight: 300;
-        color: var(--text-primary);
+        color: var(--accent);
+        background-color: var(--accent-light);
+        padding: 0px 16px;
+        border-radius: 16px;
+        border: 2px dotted var(--accent);
         margin: 0;
       }
 

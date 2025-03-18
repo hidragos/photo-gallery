@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-upload-photo',
@@ -170,7 +175,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
       .upload-prompt svg {
         margin-bottom: 10px;
-        color: var(--text-secondary);
+        color: var(--text-icon);
       }
 
       .file-preview-grid {
