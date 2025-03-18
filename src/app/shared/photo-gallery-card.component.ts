@@ -8,9 +8,7 @@ import { Component, Input } from '@angular/core';
   template: `
     <div class="photo-card">
       <img [src]="photo.url" [alt]="photo.title" loading="lazy" />
-      <div class="overlay">
-        <h3>{{ photo.title }}</h3>
-      </div>
+      <div class="overlay"></div>
     </div>
   `,
   styles: [
@@ -19,7 +17,6 @@ import { Component, Input } from '@angular/core';
         position: relative;
         cursor: pointer;
         overflow: hidden;
-        border-radius: 4px;
         background-color: var(--bg-secondary);
         height: 300px;
         transition: transform 300ms ease;
@@ -41,11 +38,6 @@ import { Component, Input } from '@angular/core';
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
-      }
-
-      .photo-card:hover img {
-        transform: scale(1.05);
       }
 
       .overlay {
@@ -53,8 +45,8 @@ import { Component, Input } from '@angular/core';
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-        padding: 20px;
+        background: rgba(0, 0, 0, 0.4);
+        height: 100%;
         opacity: 0;
         transition: opacity 300ms ease;
       }

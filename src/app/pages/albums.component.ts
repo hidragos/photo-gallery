@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-import { BaseLayoutComponent } from './layout/base-layout.component';
-import { PhotoService } from './photo.service';
+import { BaseLayoutComponent } from '../layout/base-layout.component';
+import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-albums',
@@ -80,12 +80,7 @@ import { PhotoService } from './photo.service';
       }
 
       .album-card:not(.new-album-card):hover {
-        transform: translateY(-16px);
         box-shadow: 0 8px 20px var(--card-shadow-hover, rgba(0, 0, 0, 0.15));
-      }
-
-      .album-card:not(.new-album-card):hover .album-cover img {
-        transform: scale(1.05);
       }
 
       .album-card:not(.new-album-card):hover .album-info h3 {
@@ -101,7 +96,7 @@ import { PhotoService } from './photo.service';
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 200ms ease;
       }
 
       .album-info {

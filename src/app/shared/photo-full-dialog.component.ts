@@ -19,9 +19,49 @@ import {
       class="dialog-overlay"
       (click)="onOverlayClick($event)"
       [class.fullscreen-mode]="isFullScreen"
+      [class.scroll-mode]="isScrollMode"
     >
       <div class="dialog-content">
         <div class="dialog-controls">
+          <!-- <button
+            class="control-btn scroll-btn"
+            (click)="toggleScrollMode()"
+            title="{{ isScrollMode ? 'Exit scroll view' : 'Scroll view' }}"
+          >
+            <svg
+              *ngIf="!isScrollMode"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="21" y1="6" x2="3" y2="6"></line>
+              <line x1="21" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="18" x2="3" y2="18"></line>
+            </svg>
+            <svg
+              *ngIf="isScrollMode"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </button> -->
           <button
             class="control-btn fullscreen-btn"
             (click)="toggleFullScreen()"
@@ -84,55 +124,74 @@ import {
           </button>
         </div>
 
-        <div class="photo-container">
-          <img [src]="photo.url" [alt]="photo.title" />
-        </div>
+        <ng-container *ngIf="!isScrollMode">
+          <div class="photo-container">
+            <img [src]="photo.url" [alt]="photo.title" />
+          </div>
 
-        <div class="photo-info" *ngIf="!isFullScreen">
-          <h2>{{ photo.title }}</h2>
-          <p>{{ photo.description }}</p>
-        </div>
+          <div class="photo-info" *ngIf="!isFullScreen">
+            <h2>{{ photo.title }}</h2>
+            <p>{{ photo.description }}</p>
+          </div>
 
-        <div class="navigation">
-          <button
-            class="nav-btn prev"
-            (click)="navigate.emit('prev')"
-            title="Previous photo"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          <div class="navigation">
+            <button
+              class="nav-btn prev"
+              (click)="navigate.emit('prev')"
+              title="Previous photo"
             >
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button
-            class="nav-btn next"
-            (click)="navigate.emit('next')"
-            title="Next photo"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button
+              class="nav-btn next"
+              (click)="navigate.emit('next')"
+              title="Next photo"
             >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isScrollMode">
+          <div class="scroll-view">
+            <div
+              *ngFor="let p of allPhotos; let i = index"
+              class="scroll-item"
+              [class.active]="p.id === photo.id"
+              [id]="'photo-' + p.id"
+            >
+              <img [src]="p.url" [alt]="p.title" loading="lazy" />
+              <div class="scroll-item-info">
+                <h2>{{ p.title }}</h2>
+                <p>{{ p.description }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   `,
@@ -157,25 +216,30 @@ import {
       }
 
       .fullscreen-mode .dialog-content {
-        width: 100%;
-        height: 100%;
+        width: 95dvw;
+        height: 95dvh;
         max-width: none;
       }
 
-      .fullscreen-mode .photo-container {
-        height: 100vh;
+      .fullscreen-mode img {
+        height: 100%;
       }
 
-      .fullscreen-mode img {
-        max-height: 100vh;
+      .scroll-mode .dialog-content {
+        width: 95dvw;
+        height: 95dvh;
+        max-width: none;
+        padding: 20px;
       }
 
       .dialog-content {
         position: relative;
-        width: 90%;
+        width: clamp(80%, 100vw, 100%);
         display: flex;
         flex-direction: column;
         max-width: 1400px;
+        background-color: black;
+        padding: 32px;
       }
 
       .photo-container {
@@ -187,13 +251,12 @@ import {
       }
 
       img {
-        max-height: 80vh;
+        max-height: 95vh;
         max-width: 100%;
         object-fit: contain;
       }
 
       .photo-info {
-        padding: 20px;
         color: var(--dialog-text);
       }
 
@@ -234,10 +297,11 @@ import {
       }
 
       .control-btn:hover {
-        background: rgba(0, 0, 0, 0.6);
+        color: var(--accent);
       }
 
-      .fullscreen-btn {
+      .fullscreen-btn,
+      .scroll-btn {
         font-size: 22px;
       }
 
@@ -275,7 +339,42 @@ import {
       }
 
       .nav-btn:hover {
-        background: rgba(0, 0, 0, 0.8);
+        color: var(--accent);
+      }
+
+      /* Scroll view styles */
+      .scroll-view {
+        flex: 1;
+        overflow-y: auto;
+        max-height: calc(95vh - 80px);
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 20px 0;
+      }
+
+      .scroll-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        scroll-margin-top: 20px;
+      }
+
+      .scroll-item.active {
+        border: 2px solid var(--accent);
+      }
+
+      .scroll-item img {
+        max-width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+      }
+
+      .scroll-item-info {
+        width: 100%;
+        padding: 20px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.7);
       }
 
       @keyframes fade-in {
@@ -296,6 +395,7 @@ export class PhotoFullDialogComponent implements OnInit, OnDestroy {
   @Output() navigate = new EventEmitter<'prev' | 'next'>();
 
   isFullScreen = false;
+  isScrollMode = false;
 
   constructor(private elementRef: ElementRef) {}
 
@@ -315,18 +415,27 @@ export class PhotoFullDialogComponent implements OnInit, OnDestroy {
       case 'Escape':
         if (this.isFullScreen) {
           this.toggleFullScreen();
+        } else if (this.isScrollMode) {
+          this.toggleScrollMode();
         } else {
           this.close.emit();
         }
         break;
       case 'ArrowLeft':
-        this.navigate.emit('prev');
+        if (!this.isScrollMode) {
+          this.navigate.emit('prev');
+        }
         break;
       case 'ArrowRight':
-        this.navigate.emit('next');
+        if (!this.isScrollMode) {
+          this.navigate.emit('next');
+        }
         break;
       case 'f':
         this.toggleFullScreen();
+        break;
+      case 's':
+        this.toggleScrollMode();
         break;
     }
   }
@@ -339,7 +448,24 @@ export class PhotoFullDialogComponent implements OnInit, OnDestroy {
   }
 
   toggleFullScreen() {
+    if (this.isScrollMode) return; // Don't allow fullscreen in scroll mode
     this.isFullScreen = !this.isFullScreen;
+  }
+
+  toggleScrollMode() {
+    this.isScrollMode = !this.isScrollMode;
+
+    if (this.isScrollMode) {
+      this.isFullScreen = false; // Exit fullscreen if entering scroll mode
+
+      // Wait for DOM to update, then scroll to the current photo
+      setTimeout(() => {
+        const element = document.getElementById(`photo-${this.photo.id}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
   }
 
   @HostListener('document:fullscreenchange', ['$event'])

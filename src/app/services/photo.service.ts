@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 })
 export class PhotoService {
   // Mock data
-  private photos = Array.from({ length: 50 }, (_, i) => ({
+  private photos = Array.from({ length: 1000 }, (_, i) => ({
     id: i + 1,
     url: `https://picsum.photos/700?random=${i + 1}`,
     title: `Photo ${i + 1}`,

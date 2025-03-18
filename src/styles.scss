@@ -12,7 +12,7 @@
     --card-bg: #ffffff;
     --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     --card-shadow-hover: rgba(0, 0, 0, 0.15);
-    --dialog-bg: rgba(0, 0, 0, 0.95);
+    --dialog-bg: rgba(0, 0, 0, 0.9);
     --dialog-text: #ffffff;
     --scrollbar-track: #f1f1f1;
     --scrollbar-thumb: #888;
@@ -35,7 +35,7 @@ body.dark-theme {
     --card-bg: #1e1e1e;
     --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     --card-shadow-hover: rgba(0, 0, 0, 0.4);
-    --dialog-bg: rgba(0, 0, 0, 0.95);
+    --dialog-bg: rgba(0, 0, 0, 0.9);
     --dialog-text: #ffffff;
     --scrollbar-track: #2d2d2d;
     --scrollbar-thumb: #666;
@@ -77,6 +77,7 @@ body {
     scrollbar-color: var(--text-secondary) var(--bg-secondary);
 }
 
-button {
+button,
+a {
     outline: none;
 }

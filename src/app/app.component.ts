@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { ThemeService } from './theme.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { ThemeService } from './theme.service';
   template: `
     <div class="app-container">
       <header>
-        <h1>Photography Portfolio</h1>
+        <h1>this is my microphone</h1>
         <nav>
           <a
             routerLink="/"
@@ -78,6 +78,60 @@ import { ThemeService } from './theme.service';
   `,
   styles: [
     `
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f5f5f5;
+        --text-primary: #333333;
+        --text-secondary: #666666;
+        --accent: #3f51b5;
+        --accent-light: rgba(63, 81, 181, 0.1);
+        --accent-dark: #303f9f;
+        --border-color: #e0e0e0;
+        --card-bg: #ffffff;
+        --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --card-shadow-hover: rgba(0, 0, 0, 0.15);
+        --dialog-bg: rgba(0, 0, 0, 0.85);
+        --dialog-text: #ffffff;
+        --scroll-thumb: #cccccc;
+        --scroll-track: #f5f5f5;
+      }
+
+      .dark-theme {
+        --bg-primary: #121212;
+        --bg-secondary: #1e1e1e;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --accent: #7986cb;
+        --accent-light: rgba(121, 134, 203, 0.2);
+        --accent-dark: #5c6bc0;
+        --border-color: #333333;
+        --card-bg: #1e1e1e;
+        --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        --card-shadow-hover: rgba(0, 0, 0, 0.6);
+        --dialog-bg: rgba(0, 0, 0, 0.9);
+        --dialog-text: #ffffff;
+        --scroll-thumb: #444444;
+        --scroll-track: #1e1e1e;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--scroll-track);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--scroll-thumb);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+      }
+
       .app-container {
         font-family: 'Roboto', sans-serif;
         max-width: 1200px;
@@ -140,7 +194,7 @@ import { ThemeService } from './theme.service';
         color: var(--text-secondary);
         font-size: 16px;
         padding: 5px 10px;
-        border-radius: 4px;
+        border-radius: 24px;
         transition: all 0.2s ease;
       }
 

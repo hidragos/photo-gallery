@@ -2,26 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { BackButtonComponent } from '../shared/back-button.component';
-
 @Component({
   selector: 'app-base-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, BackButtonComponent],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="base-container">
-      <div class="header-section">
-        <div class="back-button-container" [class.hidden]="!showBackButton">
-          <app-back-button
-            [label]="backLabel"
-            [routerLink]="backLink"
-          ></app-back-button>
-        </div>
-        <h2>{{ title }}</h2>
-      </div>
-      <div>
-        <ng-content></ng-content>
-      </div>
+      <ng-content></ng-content>
     </div>
   `,
   styles: [

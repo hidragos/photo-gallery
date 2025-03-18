@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BaseLayoutComponent } from './layout/base-layout.component';
-import { PhotoService } from './photo.service';
-import { UploadPhotoComponent } from './upload-photo.component';
+import { BaseLayoutComponent } from '../layout/base-layout.component';
+import { PhotoService } from '../services/photo.service';
+import { UploadPhotoComponent } from '../shared/upload-photo.component';
 
 @Component({
   selector: 'app-add-photos',
@@ -21,7 +21,7 @@ import { UploadPhotoComponent } from './upload-photo.component';
       *ngIf="album"
       [showBackButton]="true"
       [backLink]="['/albums', albumId]"
-      [backLabel]="album ? 'Back to ' + album.title : 'Back'"
+      [backLabel]="album ? album.title : 'Back'"
     >
       <div class="form-container">
         <app-upload-photo

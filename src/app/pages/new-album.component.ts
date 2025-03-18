@@ -8,9 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { BaseLayoutComponent } from './layout/base-layout.component';
-import { PhotoService } from './photo.service';
-import { UploadPhotoComponent } from './upload-photo.component';
+import { BaseLayoutComponent } from '../layout/base-layout.component';
+import { PhotoService } from '../services/photo.service';
+import { UploadPhotoComponent } from '../shared/upload-photo.component';
 
 @Component({
   selector: 'app-new-album',
